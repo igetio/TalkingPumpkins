@@ -18,7 +18,7 @@ void setup()
   Serial.begin (9600);
   mySerial.begin (9600);
   mp3_set_serial (mySerial);	//set softwareSerial for DFPlayer-mini mp3 module 
-  mp3_set_volume (20);
+  mp3_set_volume (30);
   pinMode(inPIR, INPUT); // intialize PIR sensor pin
   randomSeed(analogRead(9)); // seeds the random function to give more "random" results
 }
@@ -34,7 +34,8 @@ void loop() {
       Serial.println("Ready to run the pumpkins");
       runPumpkinSrcipt(currPick);
     }
-
+    // Wait after a run before next trigger
+    delay(180000);
   }
 }
 
@@ -47,7 +48,7 @@ void lightPumpkins(String pumpkins, int track) {
       digitalWrite(myPins[i], LOW);
     }
   }
-  if (pumpkins != "00000" ) {
+  if (pumpkins != "00000" ) { 
     Serial.println("Playing a track");
     mp3_play (track);
     delay(100);
@@ -59,6 +60,7 @@ void lightPumpkins(String pumpkins, int track) {
   delay(200);
 }
 
+// Sets the script that light the pumpkins and play back audio
 void runPumpkinSrcipt (int pick) {
   if (pick == 0) {
     Serial.println("Pumpkin script 0");
